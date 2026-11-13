@@ -1,10 +1,17 @@
-// DONO: Pessoa 1 (Acesso e base). Veja DIVISAO.md, seção 5.
-//
-// TODO: se não houver usuário logado (useAuth), redirecionar para /login com <Navigate to="/login" replace />;
-// se houver, mostrar as telas filhas com <Outlet />.
-// Enquanto isso não existe, só deixa passar para as outras pessoas conseguirem abrir as telas deles.
-import { Outlet } from 'react-router-dom';
+import { Navigate, Outlet } from 'react-router-dom';
+import { useAuth } from '../contexts/AuthContext';
 
 export default function RotaProtegida() {
+    const { usuario, carregando } = useAuth();
+
+    if(carregando) {
+        return <h1>Carregando...</h1>;
+    }
+
+    if(!usuario) {
+        return <Navigate to="/login" replace />;
+    }
+
+
     return <Outlet />;
 }
