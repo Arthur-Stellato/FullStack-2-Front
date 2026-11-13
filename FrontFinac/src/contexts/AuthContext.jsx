@@ -1,18 +1,42 @@
-// DONO: Pessoa 1 (Acesso e base). Veja DIVISAO.md, seções 1 e 5.
-//
-// TODO:
-//  - estado: usuario e token; o token sobrevive ao recarregar a página (localStorage)
-//  - login(email, senha): POST /auth/login, guarda o token e o usuario
-//  - cadastrar(dados): POST /auth/cadastro e depois login
-//  - logout(): descarta o token e o usuario
-//  - useAuth() devolve { usuario, token, login, cadastrar, logout }
-// Quem usa: services/api.js (token e logout), RotaProtegida e todas as telas.
-import { createContext, useContext } from 'react';
+import { api } from '../services/api';
+import { createContext, useContext, useEffect, useState } from 'react';
 
 const AuthContext = createContext(null);
 
 export function AuthProvider({ children }) {
-    return <AuthContext.Provider value={{}}>{children}</AuthContext.Provider>;
-}
+    const [usuario, setUsuario] = useState(null);
+    const [token, setToken] = useState(() => localStorage.getItem('token'));
+    const [carregando, setCarregando] = useState(!!token);
 
+    useEffect(() => {
+        if (token) {
+            api.get('/auth/me')
+                .then(setUsuario)
+                .catch(() => {
+                    localStorage.removeItem('token');
+                    setToken(null);
+                })
+                .finally(() => setCarregando(false));
+        }
+    }, []);
+
+    async function login(email, senha) {
+        const { token, usuario } = await api.post('/auth/login', { email, senha });
+        localStorage.setItem('token', token);
+        setToken(token);
+        setUsuario(usuario);
+    }
+    async function cadastrar(dados) {
+        await api.post('/auth/cadastro', dados)
+            .then(() => login(dados.email, dados.senha));
+    }
+    function logout() {
+        localStorage.removeItem('token');
+        setToken(null);
+        setUsuario(null);
+    }
+
+    return <AuthContext.Provider value={{ usuario, token, carregando, login, cadastrar, logout }}>{children}</AuthContext.Provider>;
+
+}
 export const useAuth = () => useContext(AuthContext);
