@@ -1,111 +1,149 @@
+/* Estilo base do front: minimalista, em tons de cinza.
+   Estiliza por elemento (nav, form, input, button, table...), então as telas de todo mundo
+   saem com o mesmo visual sem precisar de className no JSX. */
+
 :root {
-  --text: #6b6375;
-  --text-h: #08060d;
-  --bg: #fff;
-  --border: #e5e4e7;
-  --code-bg: #f4f3ec;
-  --accent: #aa3bff;
-  --accent-bg: rgba(170, 59, 255, 0.1);
-  --accent-border: rgba(170, 59, 255, 0.5);
-  --social-bg: rgba(244, 243, 236, 0.5);
-  --shadow:
-    rgba(0, 0, 0, 0.1) 0 10px 15px -3px, rgba(0, 0, 0, 0.05) 0 4px 6px -2px;
-
-  --sans: system-ui, 'Segoe UI', Roboto, sans-serif;
-  --heading: system-ui, 'Segoe UI', Roboto, sans-serif;
-  --mono: ui-monospace, Consolas, monospace;
-
-  font: 18px/145% var(--sans);
-  letter-spacing: 0.18px;
-  color-scheme: light dark;
-  color: var(--text);
-  background: var(--bg);
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-
-  @media (max-width: 1024px) {
-    font-size: 16px;
-  }
+    --fundo: #f2f3f4;
+    --superficie: #ffffff;
+    --borda: #d8dbde;
+    --texto: #23272b;
+    --texto-suave: #6a7076;
+    --destaque: #3a4046;
+    --destaque-hover: #23272b;
+    --erro: #a83a32;
+    --erro-fundo: #fbefee;
+    color-scheme: light;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --text: #9ca3af;
-    --text-h: #f3f4f6;
-    --bg: #16171d;
-    --border: #2e303a;
-    --code-bg: #1f2028;
-    --accent: #c084fc;
-    --accent-bg: rgba(192, 132, 252, 0.15);
-    --accent-border: rgba(192, 132, 252, 0.5);
-    --social-bg: rgba(47, 48, 58, 0.5);
-    --shadow:
-      rgba(0, 0, 0, 0.4) 0 10px 15px -3px, rgba(0, 0, 0, 0.25) 0 4px 6px -2px;
-  }
-
-  #social .button-icon {
-    filter: invert(1) brightness(2);
-  }
-}
+*, *::before, *::after { box-sizing: border-box; }
 
 body {
-  margin: 0;
+    margin: 0;
+    background: var(--fundo);
+    color: var(--texto);
+    font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+    line-height: 1.5;
 }
 
-#root {
-  width: 1126px;
-  max-width: 100%;
-  margin: 0 auto;
-  text-align: center;
-  border-inline: 1px solid var(--border);
-  min-height: 100svh;
-  display: flex;
-  flex-direction: column;
-  box-sizing: border-box;
+h1 { font-size: 1.5rem; font-weight: 600; margin: 0 0 1rem; }
+h2 { font-size: 1.15rem; font-weight: 600; margin: 1.5rem 0 .75rem; }
+a { color: var(--texto); text-underline-offset: 3px; }
+a:hover { color: var(--destaque-hover); }
+
+/* ---------- menu (components/Layout) ---------- */
+nav {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: .25rem;
+    padding: 0 1.5rem;
+    background: var(--superficie);
+    border-bottom: 1px solid var(--borda);
+}
+nav a {
+    padding: .9rem .7rem .75rem;
+    border-bottom: 2px solid transparent;
+    color: var(--texto-suave);
+    text-decoration: none;
+}
+nav a:hover { color: var(--texto); }
+nav a.active { color: var(--texto); border-bottom-color: var(--destaque); font-weight: 600; }
+nav span { margin-left: auto; color: var(--texto-suave); font-size: .9rem; }
+nav button { margin-left: .5rem; }
+
+main { max-width: 1040px; margin: 0 auto; padding: 1.5rem; overflow-x: auto; }   /* tabela larga rola dentro do main, não na página */
+
+/* ---------- formulários ---------- */
+label {
+    display: flex;
+    flex-direction: column;
+    gap: .3rem;
+    font-size: .9rem;
+    color: var(--texto-suave);
+}
+input, select, textarea {
+    width: 100%;
+    padding: .55rem .7rem;
+    background: var(--superficie);
+    color: var(--texto);
+    border: 1px solid var(--borda);
+    border-radius: 6px;
+    font: inherit;
+}
+input[type='checkbox'], input[type='radio'] { width: auto; }
+
+:focus-visible { outline: 2px solid var(--destaque); outline-offset: 2px; }
+
+button {
+    padding: .55rem 1rem;
+    background: var(--destaque);
+    color: #fff;
+    border: 1px solid var(--destaque);
+    border-radius: 6px;
+    font: inherit;
+    cursor: pointer;
+    transition: background-color .15s;
+}
+button:hover:not(:disabled) { background: var(--destaque-hover); }
+button:disabled { opacity: .5; cursor: not-allowed; }
+
+/* botões secundários: menu e ações dentro de tabelas (editar, excluir) */
+nav button, td button {
+    padding: .3rem .7rem;
+    background: transparent;
+    color: var(--texto);
+    border-color: var(--borda);
+    font-size: .85rem;
+}
+nav button:hover:not(:disabled), td button:hover:not(:disabled) { background: var(--fundo); }
+
+form > div { display: flex; flex-direction: column; gap: .25rem; }
+form small { color: var(--erro); font-size: .8rem; }
+
+/* erro geral devolvido pela API */
+[role='alert'] {
+    margin: 0;
+    padding: .6rem .8rem;
+    background: var(--erro-fundo);
+    color: var(--erro);
+    border: 1px solid #e6c5c1;
+    border-radius: 6px;
+    font-size: .9rem;
 }
 
-h1,
-h2 {
-  font-family: var(--heading);
-  font-weight: 500;
-  color: var(--text-h);
+/* telas sem menu (login e cadastro): formulário vira um cartão centralizado */
+#root > form {
+    display: flex;
+    flex-direction: column;
+    gap: .9rem;
+    width: min(100% - 2rem, 380px);
+    margin: 8vh auto;
+    padding: 2rem;
+    background: var(--superficie);
+    border: 1px solid var(--borda);
+    border-radius: 10px;
+}
+#root > form h1 { margin: 0; }
+#root > form p:not([role='alert']) { margin: 0; text-align: center; color: var(--texto-suave); font-size: .9rem; }
+#root > form button { margin-top: .25rem; }
+
+/* ---------- tabelas ---------- */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background: var(--superficie);
+    border: 1px solid var(--borda);
+    font-variant-numeric: tabular-nums;   /* valores em reais alinham os dígitos */
+}
+th, td { padding: .6rem .8rem; text-align: left; border-bottom: 1px solid var(--borda); }
+th { background: #eceef0; color: var(--texto-suave); font-size: .85rem; font-weight: 600; }
+tbody tr:last-child td { border-bottom: 0; }
+tbody tr:hover { background: #f7f8f9; }
+
+@media (max-width: 700px) {
+    th, td { white-space: nowrap; }
 }
 
-h1 {
-  font-size: 56px;
-  letter-spacing: -1.68px;
-  margin: 32px 0;
-  @media (max-width: 1024px) {
-    font-size: 36px;
-    margin: 20px 0;
-  }
-}
-h2 {
-  font-size: 24px;
-  line-height: 118%;
-  letter-spacing: -0.24px;
-  margin: 0 0 8px;
-  @media (max-width: 1024px) {
-    font-size: 20px;
-  }
-}
-p {
-  margin: 0;
-}
-
-code,
-.counter {
-  font-family: var(--mono);
-  display: inline-flex;
-  border-radius: 4px;
-  color: var(--text-h);
-}
-
-code {
-  font-size: 15px;
-  line-height: 135%;
-  padding: 4px 8px;
-  background: var(--code-bg);
+@media (prefers-reduced-motion: reduce) {
+    * { transition: none !important; }
 }
