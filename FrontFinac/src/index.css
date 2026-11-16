@@ -147,3 +147,62 @@ tbody tr:hover { background: #f7f8f9; }
 @media (prefers-reduced-motion: reduce) {
     * { transition: none !important; }
 }
+
+/* ---------- telas de fontes/destinos e lançamentos (Pessoa 2) ----------
+   Só dentro do <main>: o login e o cadastro (#root > form) não mudam. */
+main form {
+    display: flex;
+    flex-direction: column;
+    gap: .9rem;
+    max-width: 560px;
+    margin: 0 0 1.5rem;
+    padding: 1.25rem;
+    background: var(--superficie);
+    border: 1px solid var(--borda);
+    border-radius: 10px;
+}
+main form h2 { margin: 0; }
+main form small { margin-top: -.5rem; }
+main form > div { flex-direction: row; gap: .5rem; }   /* Salvar e Cancelar lado a lado */
+
+/* filtros de lançamentos (<search>): campos em linha */
+main search form {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+    align-items: end;
+    max-width: none;
+}
+main search form h2,
+main search form [role='alert'],
+main search form > div { grid-column: 1 / -1; }
+
+/* totais: entradas, saídas e saldo */
+main dl { display: flex; flex-wrap: wrap; gap: .25rem 1.25rem; margin: 1rem 0; }
+main dt { color: var(--texto-suave); font-size: .9rem; }
+main dd { margin: 0 1rem 0 0; font-weight: 600; }
+
+/* paginação */
+main footer { display: flex; align-items: center; justify-content: center; gap: .75rem; margin: 1rem 0; }
+main footer button {
+    padding: .3rem .7rem;
+    background: transparent;
+    color: var(--texto);
+    border-color: var(--borda);
+    font-size: .85rem;
+}
+main footer button:hover:not(:disabled) { background: var(--fundo); }
+
+/* confirmação de exclusão (<dialog open>) dentro da página, não flutuando */
+main dialog {
+    position: static;
+    display: block;
+    margin: 1rem 0;
+    padding: 1rem 1.25rem;
+    color: var(--texto);
+    background: var(--superficie);
+    border: 1px solid var(--borda);
+    border-radius: 10px;
+}
+main dialog p { margin: 0 0 .75rem; }
+main dialog button { margin-right: .5rem; }
+main dialog [role='alert'] { margin: .75rem 0 0; }
