@@ -110,48 +110,50 @@ export default function Lancamentos() {
     }
 
     const formularioDeFiltros = (
-        <form onSubmit={filtrar}>
-            <h2>Filtros</h2>
-            <label>
-                De
-                <input name="inicio" type="date" value={filtros.inicio} onChange={mudarFiltro} />
-            </label>
-            <label>
-                Até
-                <input name="fim" type="date" value={filtros.fim} onChange={mudarFiltro} />
-            </label>
-            <label>
-                Tipo
-                <select name="tipo" value={filtros.tipo} onChange={mudarFiltro}>
-                    <option value="">Todos</option>
-                    <option value="entrada">Entrada</option>
-                    <option value="saida">Saída</option>
-                </select>
-            </label>
-            <label>
-                Categoria
-                <select name="categoriaId" value={filtros.categoriaId} onChange={mudarFiltro}>
-                    <option value="">Todas</option>
-                    {categorias.map((c) => (
-                        <option key={c.id} value={c.id}>{c.nome} ({c.tipo === 'entrada' ? 'entrada' : 'saída'})</option>
-                    ))}
-                </select>
-            </label>
-            <label>
-                Fonte/destino
-                <select name="fonteDestinoId" value={filtros.fonteDestinoId} onChange={mudarFiltro}>
-                    <option value="">Todas</option>
-                    {fontes.map((f) => (
-                        <option key={f.id} value={f.id}>{f.nome}</option>
-                    ))}
-                </select>
-            </label>
-            {erroOpcoes && <p role="alert">{erroOpcoes}</p>}
-            <div>
-                <button>Filtrar</button>
-                <button type="button" onClick={limpar}>Limpar</button>
-            </div>
-        </form>
+        <search>
+            <form onSubmit={filtrar}>
+                <h2>Filtros</h2>
+                <label>
+                    De
+                    <input name="inicio" type="date" value={filtros.inicio} onChange={mudarFiltro} />
+                </label>
+                <label>
+                    Até
+                    <input name="fim" type="date" value={filtros.fim} onChange={mudarFiltro} />
+                </label>
+                <label>
+                    Tipo
+                    <select name="tipo" value={filtros.tipo} onChange={mudarFiltro}>
+                        <option value="">Todos</option>
+                        <option value="entrada">Entrada</option>
+                        <option value="saida">Saída</option>
+                    </select>
+                </label>
+                <label>
+                    Categoria
+                    <select name="categoriaId" value={filtros.categoriaId} onChange={mudarFiltro}>
+                        <option value="">Todas</option>
+                        {categorias.map((c) => (
+                            <option key={c.id} value={c.id}>{c.nome} ({c.tipo === 'entrada' ? 'entrada' : 'saída'})</option>
+                        ))}
+                    </select>
+                </label>
+                <label>
+                    Fonte/destino
+                    <select name="fonteDestinoId" value={filtros.fonteDestinoId} onChange={mudarFiltro}>
+                        <option value="">Todas</option>
+                        {fontes.map((f) => (
+                            <option key={f.id} value={f.id}>{f.nome}</option>
+                        ))}
+                    </select>
+                </label>
+                {erroOpcoes && <p role="alert">{erroOpcoes}</p>}
+                <div>
+                    <button>Filtrar</button>
+                    <button type="button" onClick={limpar}>Limpar</button>
+                </div>
+            </form>
+        </search>
     );
 
     // Confirmação de exclusão. Se a compra for parcelada, pergunta: só esta parcela ou todas?
@@ -229,11 +231,11 @@ export default function Lancamentos() {
                     </table>
                 )}
 
-                <nav aria-label="Paginação">
+                <footer>
                     <button disabled={paginacao.pagina <= 1} onClick={() => setPagina(pagina - 1)}>Anterior</button>
                     <span>Página {paginacao.pagina} de {Math.max(paginacao.totalPaginas, 1)}</span>
                     <button disabled={paginacao.pagina >= paginacao.totalPaginas} onClick={() => setPagina(pagina + 1)}>Próxima</button>
-                </nav>
+                </footer>
             </>
         );
     }
