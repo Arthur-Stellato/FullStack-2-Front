@@ -110,9 +110,15 @@ qualquer trecho do projeto. Aqui está como cada pessoa do grupo usou IA.
   campo diferentes dos da API e uma função solta que nunca era chamada no login).
 - **Gerado pela IA e ajustado pelo integrante:** o CSS base (`index.css`) e os READMEs.
 
-### Pessoa 2 (Fontes e lançamentos): [nome], com [ferramenta]
+### Pessoa 2 (Fontes e lançamentos): [Conrado], com Claude (Anthropic)
 
-- [Descreva o que a IA gerou, o que você escreveu e como revisou.]
+- **Planejamento:** A IA ajudou a organizar a implementação das telas e dos serviços do front-end, respeitando a ordem 
+  de dependência do projeto.
+- **Escrito pelo integrante, com orientação da IA:** Participei da construção das telas e dos serviços, conferindo o 
+  funcionamento dos formulários, das listagens e das operações de fontes, destinos e lançamentos.
+- **CSS e integração:** O CSS foi desenvolvido com auxílio da IA e posteriormente ajustado para utilizar as variáveis e
+  o estilo por elemento do index.css da Pessoa 1. Também foi alterada a paginação, que deixou de utilizar nav para evitar
+  conflitos com o estilo do menu.
 
 ### Pessoa 3 (Categorias e relatórios): [nome], com [ferramenta]
 
