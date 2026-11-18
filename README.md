@@ -120,6 +120,15 @@ qualquer trecho do projeto. Aqui está como cada pessoa do grupo usou IA.
   o estilo por elemento do index.css da Pessoa 1. Também foi alterada a paginação, que deixou de utilizar nav para evitar
   conflitos com o estilo do menu.
 
-### Pessoa 3 (Categorias e relatórios): [nome], com [ferramenta]
 
-- [Descreva o que a IA gerou, o que você escreveu e como revisou.]
+
+### Pessoa 3 (Categorias e relatórios): João Felipe Aleixo de Melo, com Claude (Anthropic)
+
+- **Planejamento:** A IA me ajudou a organizar a implementação das telas e dos serviços do front-end, respeitando a ordem
+  de dependência das rotas da API (Categorias, Faturas e Relatórios).
+- **Escrito pelo membro, com orientação da IA:** Participei da construção das telas de Categorias, Faturas e Relatórios
+  com seus respectivos arquivos em `services/`. A IA me explicou a integração com os endpoints do back-end e os estados
+ de carregamento, vazio e erro; eu conferi o funcionamento dos formulários, listagens, filtros e cálculos no navegador,
+ fiz os commits e estudei cada parte para conseguir explicá-la.
+- **CSS e integração:** Não precisei escrever CSS próprio; para o gráfico foi utilizado o elemento `<progress>` do HTML
+  e todas as telas foram ajustadas para utilizar as variáveis e o estilo por elemento do `index.css` da Pessoa 1.
