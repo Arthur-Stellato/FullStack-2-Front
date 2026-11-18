@@ -44,11 +44,11 @@ export default function Faturas() {
                         </p>
 
                         {cartao.faturas.map((fatura) => (
-                            <div key={fatura.referencia}>
-                                <h3>
+                            <details key={fatura.referencia} open={fatura.situacao === 'aberta'} className="mb-3">
+                                <summary className="fw-semibold mb-2">
                                     Fatura {formatarReferencia(fatura.referencia)}
-                                    {' '}({ROTULO_SITUACAO[fatura.situacao]}) · fecha {formatarData(fatura.fechamento)} · vence {formatarData(fatura.vencimento)}
-                                </h3>
+                                    {' '}({ROTULO_SITUACAO[fatura.situacao]}) · fecha {formatarData(fatura.fechamento)} · vence {formatarData(fatura.vencimento)} · total {formatarMoeda(fatura.total)}
+                                </summary>
                                 {fatura.lancamentos.length === 0 ? <p>Sem lançamentos.</p> : (
                                     <table>
                                         <thead><tr><th>Compra</th><th>Data da compra</th><th>Valor</th></tr></thead>
@@ -64,7 +64,7 @@ export default function Faturas() {
                                         <tfoot><tr><th colSpan={2}>Total da fatura</th><th>{formatarMoeda(fatura.total)}</th></tr></tfoot>
                                     </table>
                                 )}
-                            </div>
+                            </details>
                         ))}
                     </section>
                 );
