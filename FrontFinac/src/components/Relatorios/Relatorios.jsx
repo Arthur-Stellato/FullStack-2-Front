@@ -14,9 +14,32 @@ function Variacao({ total, anterior }) {
         return <>Sem mudança</>;
     }
     const texto = anterior > 0 ? ` (${Math.abs((diferenca / anterior) * 100).toFixed(1).replace('.', ',')}%)` : '';
+    // Só é usada nas saídas: gastar mais (aumento) é ruim, gastar menos (redução) é bom
     return diferenca > 0
-        ? <>Aumento de {formatarMoeda(diferenca)}{texto}</>
-        : <>Redução de {formatarMoeda(-diferenca)}{texto}</>;
+        ? <span className="text-danger">▲ Aumento de {formatarMoeda(diferenca)}{texto}</span>
+        : <span className="text-success">▼ Redução de {formatarMoeda(-diferenca)}{texto}</span>;
+}
+
+// Três cards no topo: entradas, saídas e saldo do período
+function Resumo({ entradas, saidas }) {
+    const saldo = entradas - saidas;
+    const itens = [
+        ['Entradas', entradas, 'text-success'],
+        ['Saídas', saidas, 'text-danger'],
+        ['Saldo', saldo, saldo < 0 ? 'text-danger' : 'text-dark'],
+    ];
+    return (
+        <div className="row g-3 mb-3">
+            {itens.map(([rotulo, valor, cor]) => (
+                <div className="col-12 col-sm-4" key={rotulo}>
+                    <div className="card card-body">
+                        <div className="small text-secondary">{rotulo}</div>
+                        <div className={`fs-5 fw-semibold ${cor}`}>{formatarMoeda(valor)}</div>
+                    </div>
+                </div>
+            ))}
+        </div>
+    );
 }
 
 export default function Relatorios() {
@@ -90,10 +113,14 @@ export default function Relatorios() {
                 </form>
             </search>
 
-            <div>
-                <button type="button" disabled={aba === 'categorias'} onClick={() => setAba('categorias')}>Por categoria</button>
-                <button type="button" disabled={aba === 'fontes'} onClick={() => setAba('fontes')}>Por fonte e destino</button>
-            </div>
+            <ul className="nav nav-tabs mb-3">
+                {[['categorias', 'Por categoria'], ['fontes', 'Por fonte e destino']].map(([chave, texto]) => (
+                    <li className="nav-item" key={chave}>
+                        <button type="button" className={`nav-link bg-transparent ${aba === chave ? 'active' : ''}`}
+                            onClick={() => setAba(chave)}>{texto}</button>
+                    </li>
+                ))}
+            </ul>
 
             {erro && <p role="alert">{erro}</p>}
             {carregando && <p>Carregando...</p>}
@@ -104,6 +131,8 @@ export default function Relatorios() {
                         Período: {formatarData(dados.periodo.inicio)} a {formatarData(dados.periodo.fim)}
                         {' '}(comparado com {formatarData(dados.periodoComparado.inicio)} a {formatarData(dados.periodoComparado.fim)})
                     </p>
+
+                    <Resumo entradas={dados.totalEntradas} saidas={dados.totalSaidas} />
 
                     <h2>Saídas por categoria</h2>
                     {dados.categorias.length === 0 ? <p>Nenhuma saída neste período.</p> : (
@@ -156,6 +185,8 @@ export default function Relatorios() {
             {!carregando && dados && aba === 'fontes' && dados.fontes && (
                 <>
                     <p>Período: {formatarData(dados.periodo.inicio)} a {formatarData(dados.periodo.fim)}</p>
+
+                    <Resumo entradas={dados.totalEntradas} saidas={dados.totalSaidas} />
 
                     <h2>Saídas por fonte e destino</h2>
                     <GraficoBarras titulo="Saídas por fonte e destino"
