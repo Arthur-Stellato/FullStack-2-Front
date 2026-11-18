@@ -32,7 +32,7 @@ export default function Cadastro() {
             setCampos({ confirmacao: 'As senhas não conferem.' });
             return;
         }
-        
+
         setErro('');
         setCampos({});
         setEnviando(true);
@@ -48,23 +48,31 @@ export default function Cadastro() {
     }
 
     return (
-        <form onSubmit={enviar}>
-            <h1>Criar conta</h1>
+        <>
+        <header className="p-3 fs-5 fw-semibold">Controlador Financeiro</header>
+        <div className="container py-4">
+            <div className="row justify-content-center">
+                <div className="col-12 col-sm-8 col-md-6 col-lg-4">
+                    <form className="card card-body shadow-sm" onSubmit={enviar}>
+                        <h1 className="h4 mb-3">Criar conta</h1>
 
-            {entradas.map(([nome, rotulo, tipo]) => (
-                <div key={nome}>
-                    <label>
-                        {rotulo}
-                        <input name={nome} type={tipo} value={form[nome]} onChange={mudar} />
-                    </label>
-                    {campos[nome] && <small>{campos[nome]}</small>}
+                        {entradas.map(([nome, rotulo, tipo]) => (
+                            <div className="mb-3" key={nome}>
+                                <label htmlFor={nome} className="form-label">{rotulo}</label>
+                                <input id={nome} name={nome} type={tipo} className={`form-control ${campos[nome] ? 'is-invalid' : ''}`}
+                                    value={form[nome]} onChange={mudar} />
+                                {campos[nome] && <div className="invalid-feedback">{campos[nome]}</div>}
+                            </div>
+                        ))}
+
+                        {erro && <div role="alert" className="alert alert-danger">{erro}</div>}
+
+                        <button className="btn btn-dark w-100" disabled={enviando}>{enviando ? 'Criando...' : 'Criar conta'}</button>
+                        <p className="text-center text-secondary small mt-3 mb-0">Já tem conta? <Link to="/login">Entrar</Link></p>
+                    </form>
                 </div>
-            ))}
-
-            {erro && <p role="alert">{erro}</p>}
-
-            <button disabled={enviando}>{enviando ? 'Criando...' : 'Criar conta'}</button>
-            <p>Já tem conta? <Link to="/login">Entrar</Link></p>
-        </form>
+            </div>
+        </div>
+        </>
     );
 }

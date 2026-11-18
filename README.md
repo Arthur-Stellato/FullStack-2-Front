@@ -91,3 +91,29 @@ FrontFinac/src/
   continua com número e data no formato `AAAA-MM-DD`.
 - **Estilo:** CSS puro em um único arquivo, por seletor de elemento, para que todas as telas tenham o mesmo visual sem
   classes no JSX.
+- Front e back em repositórios separados (liberado pelo professor, para publicar na Vercel).
+
+## Uso de inteligência artificial
+
+O enunciado (item 10.10) permite o uso de assistentes de IA como apoio, desde que cada integrante consiga explicar
+qualquer trecho do projeto. Aqui está como cada pessoa do grupo usou IA.
+
+### Pessoa 1 (Acesso e base): [Arthur Stellato], com Claude (Anthropic)
+
+- **Planejamento:** a IA ajudou a ler o enunciado, a dividir o trabalho em três fatias, com os contratos da API entre
+  elas, e a montar o esqueleto de pastas do back e do front (arquivos com o dono e o que falta fazer).
+- **Escrito pelo integrante, com orientação da IA:** no front, `services/api.js`, `contexts/AuthContext.jsx`,
+  `RotaProtegida`, `Login`, `Cadastro`, `Layout` e `Dashboard`, e no back o `database/seed.js`. A IA explicou os
+  conceitos antes de cada parte (comportamento do `fetch` com erros e com resposta 204, token no `localStorage` em vez
+  de cookie, redirecionamento no 401, estados de carregando, vazio e erro), entregou esqueletos com lacunas e revisou o
+  código escrito, apontando erros que o integrante corrigiu (por exemplo `api.getItem` no lugar de `api.get`, nomes de
+  campo diferentes dos da API e uma função solta que nunca era chamada no login).
+- **Gerado pela IA e ajustado pelo integrante:** o CSS base (`index.css`) e os READMEs.
+
+### Pessoa 2 (Fontes e lançamentos): [nome], com [ferramenta]
+
+- [Descreva o que a IA gerou, o que você escreveu e como revisou.]
+
+### Pessoa 3 (Categorias e relatórios): [nome], com [ferramenta]
+
+- [Descreva o que a IA gerou, o que você escreveu e como revisou.]

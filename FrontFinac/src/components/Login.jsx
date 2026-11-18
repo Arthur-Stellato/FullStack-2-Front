@@ -29,25 +29,36 @@ export default function Login() {
     }
 
     return (
-        <form onSubmit={enviar}>
-            <h1>Entrar</h1>
+        <>
+        <header className="p-3 fs-5 fw-semibold">Controlador Financeiro</header>
+        <div className="container py-4">
+            <div className="row justify-content-center">
+                <div className="col-12 col-sm-8 col-md-6 col-lg-4">
+                    <form className="card card-body shadow-sm" onSubmit={enviar}>
+                        <h1 className="h4 mb-3">Entrar</h1>
 
-            <label>
-                E-mail
-                <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} />
-            </label>
-            {campos.email && <small>{campos.email}</small>}
+                        <div className="mb-3">
+                            <label htmlFor="email" className="form-label">E-mail</label>
+                            <input id="email" type="email" className={`form-control ${campos.email ? 'is-invalid' : ''}`}
+                                value={email} onChange={(e) => setEmail(e.target.value)} />
+                            {campos.email && <div className="invalid-feedback">{campos.email}</div>}
+                        </div>
 
-            <label>
-                Senha
-                <input type="password" value={senha} onChange={(e) => setSenha(e.target.value)} />
-            </label>
-            {campos.senha && <small>{campos.senha}</small>}
+                        <div className="mb-3">
+                            <label htmlFor="senha" className="form-label">Senha</label>
+                            <input id="senha" type="password" className={`form-control ${campos.senha ? 'is-invalid' : ''}`}
+                                value={senha} onChange={(e) => setSenha(e.target.value)} />
+                            {campos.senha && <div className="invalid-feedback">{campos.senha}</div>}
+                        </div>
 
-            {erro && <p role="alert">{erro}</p>}
+                        {erro && <div role="alert" className="alert alert-danger">{erro}</div>}
 
-            <button disabled={enviando}>{enviando ? 'Entrando...' : 'Entrar'}</button>
-            <p>Não tem conta? <Link to="/cadastro">Cadastre-se</Link></p>
-        </form>
+                        <button className="btn btn-dark w-100" disabled={enviando}>{enviando ? 'Entrando...' : 'Entrar'}</button>
+                        <p className="text-center text-secondary small mt-3 mb-0">Não tem conta? <Link to="/cadastro">Cadastre-se</Link></p>
+                    </form>
+                </div>
+            </div>
+        </div>
+        </>
     );
 }
