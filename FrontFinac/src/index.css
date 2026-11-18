@@ -71,6 +71,7 @@ td button {
     font-size: .85rem;
 }
 td button:hover:not(:disabled) { background: var(--fundo); }
+td button + button { margin-left: .5rem; }   /* Editar e Excluir lado a lado, com espaço */
 
 form > div { display: flex; flex-direction: column; gap: .25rem; }
 form small { color: var(--erro); font-size: .8rem; }
